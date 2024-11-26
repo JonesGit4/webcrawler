@@ -20,6 +20,13 @@ services:
       - URL=https://crawler.maquinadevendasdigital.com.br
     command: >
       sh -c "
-      npm install &&
-      npm start
+      if [ ! -f package.json ]; then
+        echo 'package.json não encontrado. Criando um novo...';
+        echo '{}' > package.json; # Cria um arquivo package.json vazio
+        npm install; # Instala as dependências do npm
+      else
+        echo 'package.json encontrado. Instalando dependências...';
+        npm install; # Caso o package.json já exista, instala as dependências
+      fi &&
+      npm start;
       "
